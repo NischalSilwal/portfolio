@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Simple Stylish Table</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="styles/awards.css">
+ 
+</head>
+<body>
+    <h2 style="text-align:center; color:#333;">Event Certificates</h2>
+    <table id="TableExample">
+        <thead>
+            <tr>
+                <th>S.N</th>
+                <th>Date</th>
+                <th>Event</th>
+                <th>Details</th>
+                <th>View Certificate</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Table rows will be inserted here by JavaScript -->
+        </tbody>
+    </table>
+
+    <script>
+        // Base class for storing data
+class Certificate {
+    constructor(date, event,details, certificateUrl) {
+        this.date = date;
+        this.event = event;
+        this.details = details;
+        this.certificateUrl = certificateUrl;
+    }
+
+    // Method to generate HTML for a table row with a serial number
+    generateTableRow(serialNumber) {
+        return `
+            <tr>
+                <td>${serialNumber}</td>
+                <td>${this.date}</td>
+                <td>${this.event}</td>
+                <td>${this.details}</td>
+                <td><a href="${this.certificateUrl}" class="magicbox view-certificate-btn">View Certificate</a></td>
+            </tr>
+        `;
+    }
+}
+
+// Derived class that adds data and handles table updates
+class CertificateManager extends Certificate {
+    constructor() {
+        super();
+        this.certificates = [];
+    }
+
+    // Add a certificate to the list
+    addCertificate(date, event, details, certificateUrl) {
+        const newCertificate = new Certificate(date, event, details, certificateUrl);
+        this.certificates.push(newCertificate);
+    }
+
+    // Display the certificates in the table with serial numbers
+    displayCertificates() {
+        const tableBody = $("#TableExample tbody");
+        tableBody.empty();  // Clear the table body
+
+        for (let i = 0; i < this.certificates.length; i++) {
+            const cert = this.certificates[i];
+            tableBody.append(cert.generateTableRow(i + 1));
+        }
+
+        // Initialize Magic Box for viewing images
+        $(".magicbox").magicbox2();
+    }
+}
+
+// Initialize CertificateManager and add certificates
+const certManager = new CertificateManager();
+certManager.addCertificate("2022-11-26", "Hackathon 2022", "Won the 2 Days hackathon competition","Certificates/Award1.jpg");
+certManager.addCertificate("2022-11-11", "Debugging Competition","Second Runner-Up of the competition", "Certificates/Award2.jpg");
+certManager.addCertificate("2022-11-10", "IT Quiez Co,pitetion","First Runner-up of the competition", "Certificates/Award3.jpg");
+
+
+// Display certificates in the table
+certManager.displayCertificates();
+
+// Initialize DataTable
+$(document).ready(function(){
+    $("#TableExample").DataTable({
+        "pagingType": "simple_numbers"
+    });
+});
+
+    </script>
+</body>
+</html>

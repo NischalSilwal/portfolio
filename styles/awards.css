@@ -1,0 +1,36 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f9f9f9;
+    margin: 0;
+    padding: 20px;
+}
+
+#TableExample {
+    width: 100%;
+    margin: 20px auto;
+    border-collapse: collapse;
+}
+
+#TableExample thead {
+    background-color: #007BFF;
+    color: #fff;
+}
+
+#TableExample th, #TableExample td {
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #ddd;
+}
+
+#TableExample tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.view-certificate-btn {
+    color: #007BFF;
+    text-decoration: none;
+}
+
+.view-certificate-btn:hover {
+    text-decoration: underline;
+}
